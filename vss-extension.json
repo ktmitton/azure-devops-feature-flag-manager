@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "kmitton-feature-flag-manager",
     "publisher": "kenneth-mitton",
-    "version": "1.0.180",
+    "version": "1.0.181",
     "name": "Feature Flag Manager",
     "description": "An extension for managing feature flags.",
     "public": false,
@@ -22,6 +22,10 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ktmitton/azure-devops-feature-flag-manager"
+    },
     "scopes": [
         "vso.code_write",
         "vso.extension.data_write",
