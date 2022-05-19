@@ -457,4 +457,4 @@ $RECYCLE.BIN/
 ## Extension Distribution
 ##
 *.vsix
-dist/*
+dist/
