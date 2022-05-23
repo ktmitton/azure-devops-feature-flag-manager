@@ -34,3 +34,11 @@ To get started, **follow these steps**:
 Once you have configurations set up, you can then create pipelines that monitor the main branch in the repository for changes. The pipelines can then deploy those changes to the appropriate destination(s), such as Consul or Vault.
 
 Currently there are no security restrictions being enforced, allowing anybody with access to the project the abililty to access the extension. If you would like to limit write access to the settings, this can be managed through normal security policies on the git repository.
+
+## Contributing
+
+### Thanks to all the people who have contributed!
+
+[![contributors](https://contrib.rocks/image?repo=ktmitton/azure-devops-feature-flag-manager)](https://github.com/ktmitton/azure-devops-feature-flag-manager/graphs/contributors)
+
+Made with [contrib.rocks](https://contrib.rocks).
