@@ -1,6 +1,6 @@
 # Overview
 
-This extension allows users to manage configuration values through a more convenient UI for feature flags or other similar toggles. The advantage this has over simply using library variables is that, in addition to having a better UX, it provides an audit log for changes made by users. 
+This extension allows users to manage configuration values through a more convenient UI for feature flags or other similar toggles. The advantage this has over simply using library variables is that, in addition to having a better UX, it provides an audit log for changes made by users.
 
 
 To accomplish this, it requires access to the **following [scopes](https://docs.microsoft.com/en-us/azure/devops/extend/develop/manifest?view=azure-devops#scopes)**:
@@ -21,9 +21,9 @@ To get started, **follow these steps**:
 ![error2](https://user-images.githubusercontent.com/103285014/169904356-4da28826-169f-4563-bbc6-2498d63c80cb.png)
 
 1. You should now be able to see any configured values
-    * The template has no settings - you currently need to manually edit the `manifest.json` file to add new environments/values. Until functionality is added to the UI to support this, [example-manifest.json](/example-manifest.json) can be used as a reference to show the capabilities of the tool.
+    * The template has no settings - you currently need to manually edit the `manifest.json` file to add new environments/values. Until functionality is added to the UI to support this, [example-manifest.json](example-manifest.json) can be used as a reference to show the capabilities of the tool.
       * Below is an example of what you should see when the extension is loaded using the `example-manifest.json` file:
-      
+
  ![finaloutput](https://user-images.githubusercontent.com/103285014/169904865-4579e944-7ec2-4368-9db5-541ac609b4e7.png)
 
 
