@@ -14,7 +14,7 @@ To get started, follow these steps:
 1.  During initialization, it will report an error that it doesn't know the repository to use, so click the 'Set Repository' and pick the repo you created in step 1
 1. After you pick the repository, you will get another error that there is no `manifest.json` file, so you will need to click the `Create File` button
 1. You should now be able to see any configured values
-    * The template has no settings, you currently need to manually edit the `manifest.json` file to add new environments/values (Should we include a sample file?)
+    * The template has no settings, you currently need to manually edit the `manifest.json` file to add new environments/values. Until functionality is added to the UI to support this, [example-manifest.json](/example-manifest.json) can be used as a reference to show the capabilities of the tool.
 
 Once you have configurations set up, you can then create pipelines that monitor the main branch in the repository for changes. The pipelines can then deploy those changes to the appropriate destination(s), such as Consul or Vault.
 
