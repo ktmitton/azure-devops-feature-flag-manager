@@ -60,8 +60,8 @@
       "description": "Sets what details should be used when providing contact details",
       "features": [
         {
-          "name": "Email Notifications",
-          "description": "Sets whether email notifications should be sent for certain actions.",
+          "name": "Email Support",
+          "description": "Sets the email inbox to use when offering support contact information",
           "type": "dropdown",
           "id": "Notifications:Email",
           "options": [
