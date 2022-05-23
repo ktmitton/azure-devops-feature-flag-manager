@@ -11,7 +11,7 @@
     ],
     "content": {
         "details": {
-            "path": "PACKAGE-DESCRIPTION.md"
+            "path": "README.md"
         },
         "license": {
             "path": "LICENSE"
