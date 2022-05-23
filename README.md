@@ -12,7 +12,7 @@ To accomplish this, it requires access to the **following [scopes](https://docs.
 ---
 
 To get started, **follow these steps**:
-1. Create a new git repository in the project you want to host a collection of configuration values
+1. Create a new git repository with a branch called `main` in the project you want to host a collection of configuration values
 1. Open up the project and select the Feature Flags hub in ADO
 1.  During initialization, it will report an error stating it does not know which repository to use. Click the 'Set Repository' button and pick the repo you created in step 1:
 ![error1](https://user-images.githubusercontent.com/103285014/169904218-2c17955c-bd0a-42ac-a40a-aa249297f36d.png)
