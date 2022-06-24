@@ -52,7 +52,7 @@ const FeaturesOverviewContextProvider = ({ children }: { children: React.ReactEl
     if (canSave) {
       setIsSaving(true);
 
-      writeFile(project.id, repository.id, '/manifest.json', comment, JSON.stringify(featuresOverview, null, 2), commitId)
+      writeFile(project.id, repository.id, repository.defaultBranch, '/manifest.json', comment, JSON.stringify(featuresOverview, null, 2), commitId)
         .then(() => {
           refreshChangeLog();
         })

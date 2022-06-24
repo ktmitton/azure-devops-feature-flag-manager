@@ -19,7 +19,7 @@ const ManifestFileSelector = () => {
             text: 'Create File',
             onClick: async () => {
               if (project !== undefined && repository !== undefined) {
-                await writeFile(project.id, repository.id, '/manifest.json', 'Initial commit', JSON.stringify({ version: "1.0", environments: [], featureGroups: [] }, null, 2));
+                await writeFile(project.id, repository.id, repository.defaultBranch, '/manifest.json', 'Initial commit', JSON.stringify({ version: "1.0", environments: [], featureGroups: [] }, null, 2));
 
                 refreshChangeLog();
               }
@@ -33,7 +33,7 @@ const ManifestFileSelector = () => {
         className='flex-self-stretch'
         severity={MessageCardSeverity.Error}
       >
-        {'Unable to locate /manifest.json on branch [main].'}
+        {`Unable to locate /manifest.json on branch [${repository?.defaultBranch}].`}
       </MessageCard>
       {showRepositorySelectionDialog && (
         <RepositorySelectionDialog onDismiss={async (selectedRepository) => {

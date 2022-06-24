@@ -24,7 +24,15 @@ const readFile = async (projectId: string, repositoryId: string, path: string, c
   return item.content;
 };
 
-const getInitialCommitId = async (projectId: string, repositoryId: string, path: string) => {
+const getRepository = async (projectId: string, repositoryId: string) => {
+  const repository = await getClient(GitRestClient).getRepository(repositoryId, projectId);
+
+  repository.defaultBranch = (repository.defaultBranch || 'main').replace(/^refs\/heads\//, '');
+
+  return repository;
+}
+
+const getInitialCommitId = async (projectId: string, repositoryId: string, branch: string) => {
   try {
     const commits = await getClient(GitRestClient).getCommits(
       repositoryId, {
@@ -32,7 +40,7 @@ const getInitialCommitId = async (projectId: string, repositoryId: string, path:
         itemVersion: {
           versionOptions: GitVersionOptions.None,
           versionType: GitVersionType.Branch,
-          version: 'main'
+          version: branch
         }
       } as GitQueryCommitsCriteria,
       projectId);
@@ -43,8 +51,8 @@ const getInitialCommitId = async (projectId: string, repositoryId: string, path:
   }
 };
 
-const writeFile = async (projectId: string, repositoryId: string, path: string, commitMessage: string, fileContents: string, oldCommitId?: string) => {
-  const oldObjectId = oldCommitId || await getInitialCommitId(projectId, repositoryId, path);
+const writeFile = async (projectId: string, repositoryId: string, branch: string, path: string, commitMessage: string, fileContents: string, oldCommitId?: string) => {
+  const oldObjectId = oldCommitId || await getInitialCommitId(projectId, repositoryId, branch);
   const changeType = oldCommitId === undefined ? VersionControlChangeType.Add : VersionControlChangeType.Edit;
 
   const push = {
@@ -67,7 +75,7 @@ const writeFile = async (projectId: string, repositoryId: string, path: string, 
     ],
     refUpdates: [
       {
-        name: "refs/heads/main",
+        name: `refs/heads/${branch}`,
         oldObjectId: oldObjectId
       }
     ]
@@ -78,4 +86,4 @@ const writeFile = async (projectId: string, repositoryId: string, path: string, 
   await client.createPush(push, repositoryId, projectId);
 };
 
-export { readFile, writeFile }
+export { getRepository, readFile, writeFile }

@@ -1,9 +1,9 @@
-import { getClient, CommonServiceIds, IProjectPageService, IProjectInfo, IExtensionDataService, IExtensionDataManager } from 'azure-devops-extension-api';
-import { GitRestClient } from 'azure-devops-extension-api/Git/GitClient';
+import { CommonServiceIds, IProjectPageService, IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git/Git';
-import { getService, getExtensionContext, getAccessToken } from 'azure-devops-extension-sdk';
+import { getService } from 'azure-devops-extension-sdk';
 import React, { useEffect, useState } from 'react';
 import { getSetting } from '../Services/ExtensionSettingsService';
+import { getRepository } from '../Services/GitService';
 
 interface RepositoryContextState {
   project?: IProjectInfo;
@@ -22,13 +22,6 @@ const RepositoryContext = React.createContext<RepositoryContextProps>({
   refresh: () => { }
 });
 
-const getExtensionDataManager = () => getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService)
-  .then(extensionDataService => {
-    return getAccessToken().then(accessToken => {
-      return extensionDataService.getExtensionDataManager(`${getExtensionContext().publisherId}.${getExtensionContext().extensionId}`, accessToken);
-    });
-  });
-
 const RepositoryContextProvider = ({ children }: { children: React.ReactElement }) => {
   const [project, setProject] = useState<IProjectInfo>();
   const [repository, setRepository] = useState<GitRepository>();
@@ -45,7 +38,7 @@ const RepositoryContextProvider = ({ children }: { children: React.ReactElement 
       getSetting(project.id, 'RepositoryId')
         .then(repositoryId => {
           if (repositoryId !== undefined) {
-            return getClient(GitRestClient).getRepository(repositoryId, project.id)
+            return getRepository(project.id, repositoryId)
               .then(repository => {
                 canUpdate && setRepository(repository);
               });

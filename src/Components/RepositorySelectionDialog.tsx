@@ -56,7 +56,7 @@ const RepositorySelectionDialog = ({ onDismiss }: { onDismiss: (repository?: Git
     >
       <p>
         The selected repository is where feature flag values will be saved.
-        It is recommended that this be a repository whose use is solely for this extension, as it will be performing writes directly to the main branch.
+        It is recommended that this be a repository whose use is solely for this extension, as it will be performing writes directly to the default branch.
       </p>
       <Dropdown
         items={availableRepositories?.map(x => { return { id: x.id, text: x.name }; }) || []}

@@ -41,7 +41,7 @@ const ChangeLogContextProvider = ({ children }: { children: React.ReactElement }
           itemVersion: {
             versionOptions: GitVersionOptions.None,
             versionType: GitVersionType.Branch,
-            version: 'main'
+            version: repository.defaultBranch
           }
         } as GitQueryCommitsCriteria,
         project.id)
