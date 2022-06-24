@@ -8,6 +8,7 @@ interface FeatureProps {
   id: string;
   options: Option[];
   values: FeatureValue[];
+  metadata: { [key: string]: string };
 }
 
 export default FeatureProps;
