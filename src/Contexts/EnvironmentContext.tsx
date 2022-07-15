@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Environment from '../Models/Environment';
+import Environment from '../Models/Manifest/V1/Environment';
 import { FeaturesOverviewContext } from './FeaturesOverviewContext';
 
 interface EnvironmentContextState {

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 
 import { Card } from "azure-devops-ui/Card";
 import { Feature } from './Feature';
-import FeatureGroupProps from '../Models/FeatureGroupProps';
+import FeatureGroup from '../Models/Manifest/V2/FeatureGroup';
+// import { EnvironmentContext } from '../Contexts/EnvironmentContext';
 
-const FeatureGroup = ({ name, description, features }: FeatureGroupProps) => {
+const FeatureGroup = ({ name, description, features, values }: FeatureGroup) => {
+  //const { selectedEnvironment } = useContext(EnvironmentContext);
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -17,7 +19,15 @@ const FeatureGroup = ({ name, description, features }: FeatureGroupProps) => {
       headerDescriptionProps={{ text: description }}
     >
       <div className='flex-grow'>
-        {features.map(x => <div className="flex-row" style={{ marginTop: '10px', marginBottom: '10px' }}><Feature {...x} /></div>)}
+        {features.map(x => {
+          var selectedValue
+          return (
+            <div className="flex-row" style={{ marginTop: '10px', marginBottom: '10px' }}>
+              <Feature feature={x} values={values} />
+            </div>
+          );
+        }
+        )}
       </div>
     </Card>
   )

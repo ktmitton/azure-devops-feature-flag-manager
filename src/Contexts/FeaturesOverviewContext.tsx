@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RepositoryContext } from './RepositoryContext';
-import FeaturesOverview from '../Models/FeaturesOverview';
 import { ChangeLogContext } from './ChangeLogContext';
 import { readFile, writeFile } from '../Services/GitService';
+import Manifest, { convertFromV1 } from '../Models/Manifest/V2/Manifest';
+import FeaturesOverview from '../Models/Manifest/V1/FeaturesOverview';
 
 interface FeaturesOverviewContextState {
-  featuresOverview?: FeaturesOverview,
+  featuresOverview?: Manifest,
   isLocked: boolean
 }
 
@@ -22,7 +23,7 @@ const FeaturesOverviewContext = React.createContext<FeaturesOverviewContextProps
 const FeaturesOverviewContextProvider = ({ children }: { children: React.ReactElement }) => {
   const { project, repository } = useContext(RepositoryContext);
   const { commitId: changeLogCommitId, isUpdating: changeLogIsUpdating, refresh: refreshChangeLog } = useContext(ChangeLogContext);
-  const [featuresOverview, setFeaturesOverview] = useState<FeaturesOverview>();
+  const [featuresOverview, setFeaturesOverview] = useState<Manifest>();
   const [isSaving, setIsSaving] = useState(false);
   const [commitId, setCommitId] = useState(changeLogCommitId);
 
@@ -37,7 +38,21 @@ const FeaturesOverviewContextProvider = ({ children }: { children: React.ReactEl
     if (areDependenciesLoaded && !doCommitIdsMatch) {
       readFile(project.id, repository.id, '/manifest.json', changeLogCommitId)
         .then(contents => {
-          setFeaturesOverview(JSON.parse(contents) as FeaturesOverview);
+          const { version } = JSON.parse(contents);
+
+          switch (version) {
+            case '1.0':
+              const newVersion = convertFromV1(JSON.parse(contents) as FeaturesOverview);
+              setFeaturesOverview(newVersion);
+              // Convert to 2.0
+              break;
+            case '2.0':
+              setFeaturesOverview(JSON.parse(contents) as Manifest);
+              // Load 2.0
+              break;
+            default:
+              throw new Error(`Unknown version ${version}`);
+          }
           setCommitId(changeLogCommitId);
           setIsSaving(false);
         });

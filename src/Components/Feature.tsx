@@ -2,29 +2,36 @@ import React, { useContext, useState } from 'react';
 
 import { Dropdown } from 'azure-devops-ui/Dropdown';
 import { Toggle } from 'azure-devops-ui/Toggle';
-import FeatureProps from '../Models/FeatureProps';
 import { ListSelection } from 'azure-devops-ui/List';
 import { EnvironmentContext } from '../Contexts/EnvironmentContext';
 import { FeaturesOverviewContext } from '../Contexts/FeaturesOverviewContext';
+import FeatureProps from '../Models/Manifest/V1/FeatureProps';
+import FeatureV2 from '../Models/Manifest/V2/Feature';
+import Option from '../Models/Manifest/V2/Option';
 
-const ToggleFeature = ({ name, options, values }: FeatureProps) => {
+interface ToggleFeatureProps {
+  name: string;
+  options: Option[];
+  value: string;
+}
+
+const ToggleFeature = ({ name, options, value }: ToggleFeatureProps) => {
   const { save, isLocked } = useContext(FeaturesOverviewContext);
-  const { selectedEnvironment } = useContext(EnvironmentContext);
+  const [selectedValue, setSelectedValue] = useState(value);
 
-  const selectedOption = values.find(x => x.environmentName === selectedEnvironment?.name);
-
-  const checked = selectedOption?.optionId === 'on';
+  const checked = selectedValue === 'on';
 
   const updateValue = (isChecked: boolean) => {
-    const matchingOptions = options.find(x => x.id === (isChecked ? 'on' : 'off'));
+    setSelectedValue(isChecked ? 'on' : 'off');
+    // const matchingOptions = options.find(x => x.id === (isChecked ? 'on' : 'off'));
 
-    if (selectedOption && matchingOptions) {
-      const previousOptionId = selectedOption.optionId;
+    // if (selectedOption && matchingOptions) {
+    //   const previousOptionId = selectedOption.optionId;
 
-      selectedOption.optionId = matchingOptions.id;
+    //   selectedOption.optionId = matchingOptions.id;
 
-      save(`Updated ${name} in ${selectedEnvironment?.name} from ${previousOptionId} to ${matchingOptions.id}`)
-    }
+    //   save(`Updated ${name} in ${selectedEnvironment?.name} from ${previousOptionId} to ${matchingOptions.id}`)
+    // }
   };
 
   return (
@@ -67,10 +74,10 @@ const DialogFeature = ({ name, options, values }: FeatureProps) => {
   );
 };
 
-const Feature = (props: FeatureProps) => {
+const Feature = (props: FeatureV2) => {
   switch (props.type) {
     case 'toggle':
-      return <ToggleFeature {...props} />;
+      return <ToggleFeature name={props.name} options={props.options} value={props.} />;
     case 'dropdown':
       return <DialogFeature {...props} />;
     default:

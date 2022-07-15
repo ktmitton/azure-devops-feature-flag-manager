@@ -1,0 +1,105 @@
+{
+  "version": "2.0",
+  "environments": [
+    {
+      "name": "Development",
+      "description": "Environment used for developing new code."
+    },
+    {
+      "name": "Testing",
+      "description": "Environment used to test code as it is in Production, or will be with the next deploy."
+    },
+    {
+      "name": "Production",
+      "description": "Environment used to serve actual consumers of the provided service(s)."
+    }
+  ],
+  "featureGroups": [
+    {
+      "name": "Feature Toggles",
+      "description": "Settings that control whether a feature should be enabled or disabled.",
+      "features": [
+        {
+          "name": "Email Notifications",
+          "description": "Sets whether email notifications should be sent for certain actions.",
+          "type": "toggle",
+          "id": "Notifications:Email",
+          "options": [
+            {
+              "id": "off",
+              "name": "Disabled",
+              "description": "Do not send email notifications",
+              "value": "disabled"
+            },
+            {
+              "id": "on",
+              "name": "Enabled",
+              "description": "Send email notifications",
+              "value": "enabled"
+            }
+          ],
+          "values": [
+            {
+              "environmentName": "Development",
+              "optionId": "on"
+            },
+            {
+              "environmentName": "Testing",
+              "optionId": "off"
+            },
+            {
+              "environmentName": "Production",
+              "optionId": "off"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Contact Settings",
+      "description": "Sets what details should be used when providing contact details",
+      "features": [
+        {
+          "name": "Email Support",
+          "description": "Sets the email inbox to use when offering support contact information",
+          "type": "dropdown",
+          "id": "Notifications:Email",
+          "options": [
+            {
+              "id": "help",
+              "name": "Help",
+              "description": "The generic help inbox",
+              "value": "help@example.com"
+            },
+            {
+              "id": "customerservice",
+              "name": "Customer Service",
+              "description": "The old inbox specifically for Customer Solutions",
+              "value": "customer-service@example.com"
+            },
+            {
+              "id": "customersolutions",
+              "name": "Customer Solutions",
+              "description": "The new inbox for Customer Solutions",
+              "value": "customer-solutions@example.com"
+            }
+          ],
+          "values": [
+            {
+              "environmentName": "Development",
+              "optionId": "customerservice"
+            },
+            {
+              "environmentName": "Testing",
+              "optionId": "customersolutions"
+            },
+            {
+              "environmentName": "Production",
+              "optionId": "customerservice"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
