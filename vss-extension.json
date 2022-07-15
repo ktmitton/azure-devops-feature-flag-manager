@@ -1,11 +1,11 @@
 {
     "manifestVersion": 1,
-    "id": "kmitton-feature-flag-manager",
+    "id": "kmitton-feature-flag-manager-BETA",
     "publisher": "kenneth-mitton",
-    "version": "1.1.10",
+    "version": "1.2.8",
     "name": "Feature Flag Manager",
     "description": "An extension for managing feature flags.",
-    "public": true,
+    "public": false,
     "categories": [
         "Azure Repos"
     ],
@@ -62,6 +62,119 @@
                 "order": 100,
                 "uri": "settings.html"
             }
+        },
+        {
+            "id": "service-endpoint-vault",
+            "description": "Stores Vault credentials and can login/logout of Vault",
+            "type": "ms.vss-endpoint.service-endpoint-type",
+            "targets": [
+                "ms.vss-endpoint.endpoint-types"
+            ],
+            "properties": {
+                "name": "vaultCredentials",
+                "displayName": "Vault Credentials",
+                "url": {
+                    "displayName": "Server Url",
+                    "helpTest": "Url for the Vault service to connect to."
+                },
+                "authenticationSchemes": [
+                    {
+                        "id": "endpoint-auth-scheme-token",
+                        "name": "token",
+                        "displayName": "Vault Token",
+                        "type": "ms.vss-endpoint.endpoint-auth-scheme-token",
+                        "description": "Token base authentication scheme",
+                        "inputDescriptors": [
+                            {
+                                "id": "apiToken",
+                                "name": "Vault Token",
+                                "description": "Token to use when accessing vault",
+                                "inputMode": "textbox",
+                                "isConfidential": true,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string",
+                                    "maxLength": 300
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "endpoint-auth-scheme-approle",
+                        "name": "AppRole",
+                        "displayName": "AppRole",
+                        "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
+                        "description": "AppRole base authentication scheme",
+                        "inputDescriptors": [
+                            {
+                                "id": "roleId",
+                                "name": "Vault Role Id",
+                                "description": "Role Id to use when accessing vault",
+                                "inputMode": "textbox",
+                                "isConfidential": false
+                            },
+                            {
+                                "id": "secretId",
+                                "name": "Vault Secret Id",
+                                "description": "Secret Id to use when accessing vault",
+                                "inputMode": "textbox",
+                                "isConfidential": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "service-endpoint-hashicorp-roles",
+            "description": "Stores roles to use when logging in to Consul and Vault",
+            "type": "ms.vss-endpoint.service-endpoint-type",
+            "targets": [
+                "ms.vss-endpoint.endpoint-types"
+            ],
+            "properties": {
+                "name": "hashicorpRoles",
+                "displayName": "Hashicorp Roles",
+                "url": {
+                    "displayName": "Server Url",
+                    "helpTest": "Url for the Vault service to connect to."
+                },
+                "authenticationSchemes": [
+                    {
+                        "id": "endpoint-auth-scheme-roles",
+                        "name": "roles",
+                        "displayName": "Hashicorp Roles",
+                        "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
+                        "description": "Vault/Consul roles to use for logins"
+                    }
+                ],
+                "inputDescriptors": [
+                    {
+                        "id": "vaultRole",
+                        "name": "Vault Role",
+                        "description": "Role to use when logging in to vault",
+                        "inputMode": "textbox",
+                        "isConfidential": false
+                    },
+                    {
+                        "id": "consulRole",
+                        "name": "Consul Role",
+                        "description": "Role to use when logging in to consul",
+                        "inputMode": "textbox",
+                        "isConfidential": false
+                    }
+                ]
+            }
+        },
+        {
+            "id": "vault-login-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks"
+            }
         }
     ],
     "files": [
@@ -84,6 +197,11 @@
         {
             "path": "example-manifest.json",
             "addressable": true
+        },
+        {
+            "path": "dist/Tasks",
+            "addressable": false,
+            "packagePath": "Tasks"
         }
     ]
 }

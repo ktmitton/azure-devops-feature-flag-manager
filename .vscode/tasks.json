@@ -1,0 +1,83 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Vault Login",
+      "type": "shell",
+      "command": "npm install",
+      "options": {
+        "cwd": "${workspaceFolder}/Tasks"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Build Vault Login",
+      "type": "shell",
+      "dependsOn": [
+        "Install Vault Login"
+      ],
+      "command": "tsc",
+      "options": {
+        "cwd": "${workspaceFolder}/Tasks"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Copy node_modules",
+      "type": "shell",
+      "dependsOn": [
+        "Install Vault Login"
+      ],
+      "command": "cp node_modules ../dist/Tasks/node_modules",
+      "options": {
+        "cwd": "${workspaceFolder}/Tasks"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Copy task.json",
+      "type": "shell",
+      "command": "cp task.json ../dist/Tasks/task.json",
+      "options": {
+        "cwd": "${workspaceFolder}/Tasks"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Install UI",
+      "type": "shell",
+      "command": "npm install",
+      "options": {
+        "cwd": "${workspaceFolder}/UI"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Build UI",
+      "type": "shell",
+      "dependsOn": [
+        "Install UI"
+      ],
+      "command": "npx webpack",
+      "options": {
+        "cwd": "${workspaceFolder}/UI"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Build Extension",
+      "type": "shell",
+      "dependsOn": [
+        "Build Vault Login",
+        "Copy node_modules",
+        "Copy task.json",
+        "Build UI"
+      ],
+      "command": "tfx extension create",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build"
+    }
+  ]
+}
