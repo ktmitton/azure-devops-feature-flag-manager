@@ -1,11 +1,11 @@
 {
     "manifestVersion": 1,
-    "id": "kmitton-feature-flag-manager-BETA",
+    "id": "kmitton-feature-flag-manager",
     "publisher": "kenneth-mitton",
-    "version": "1.2.10",
+    "version": "1.2.13",
     "name": "Feature Flag Manager",
     "description": "An extension for managing feature flags.",
-    "public": false,
+    "public": true,
     "categories": [
         "Azure Repos"
     ],
