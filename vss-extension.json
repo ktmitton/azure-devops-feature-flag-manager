@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "kmitton-feature-flag-manager-BETA",
     "publisher": "kenneth-mitton",
-    "version": "1.2.8",
+    "version": "1.2.10",
     "name": "Feature Flag Manager",
     "description": "An extension for managing feature flags.",
     "public": false,

@@ -2,21 +2,18 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Install Vault Login",
+      "label": "Delete Dist",
       "type": "shell",
-      "command": "npm install",
+      "command": "rm -r ./dist && mkdir ./dist && mkdir ./dist/Tasks",
       "options": {
-        "cwd": "${workspaceFolder}/Tasks"
+        "cwd": "${workspaceFolder}"
       },
       "group": "build"
     },
     {
-      "label": "Build Vault Login",
+      "label": "Install Vault Login",
       "type": "shell",
-      "dependsOn": [
-        "Install Vault Login"
-      ],
-      "command": "tsc",
+      "command": "npm install",
       "options": {
         "cwd": "${workspaceFolder}/Tasks"
       },
@@ -28,7 +25,7 @@
       "dependsOn": [
         "Install Vault Login"
       ],
-      "command": "cp node_modules ../dist/Tasks/node_modules",
+      "command": "cp -r ./node_modules/ ../dist/Tasks/node_modules",
       "options": {
         "cwd": "${workspaceFolder}/Tasks"
       },
@@ -38,6 +35,19 @@
       "label": "Copy task.json",
       "type": "shell",
       "command": "cp task.json ../dist/Tasks/task.json",
+      "options": {
+        "cwd": "${workspaceFolder}/Tasks"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Build Vault Login",
+      "type": "shell",
+      "dependsOn": [
+        "Install Vault Login"
+      ],
+      "dependsOrder": "sequence",
+      "command": "tsc",
       "options": {
         "cwd": "${workspaceFolder}/Tasks"
       },
@@ -68,11 +78,13 @@
       "label": "Build Extension",
       "type": "shell",
       "dependsOn": [
-        "Build Vault Login",
-        "Copy node_modules",
+        "Delete Dist",
         "Copy task.json",
+        "Copy node_modules",
+        "Build Vault Login",
         "Build UI"
       ],
+      "dependsOrder": "sequence",
       "command": "tfx extension create",
       "options": {
         "cwd": "${workspaceFolder}"
